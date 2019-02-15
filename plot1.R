@@ -1,0 +1,13 @@
+#plot 1
+
+install.packages("dplyr")
+library(dplyr)
+
+download.file("https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip",destfile = "cc.zip")
+hpc <- read.csv(unzip("cc.zip"), na.strings="?", header=T, sep=';', stringsAsFactors=F)
+data1 <- hpc %>% filter(Date %in% c("1/2/2007","2/2/2007"))
+data1$Date <- as.Date(data1$Date, format="%d/%m/%Y")
+hist(data1$Global_active_power, main="Global Active Power", 
+     xlab="Global Active Power (kilowatts)", ylab="Frequency", col="Red")
+dev.copy(png, file="plot1.png")
+dev.off()
